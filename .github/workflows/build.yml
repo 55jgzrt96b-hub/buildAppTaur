@@ -1,0 +1,61 @@
+
+name: Build Windows
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-tauri-app2:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install dependencies
+        working-directory: tauri-app2
+        run: npm install
+
+      - name: Build Tauri
+        working-directory: tauri-app2
+        run: npm run tauri build
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: tauri-app2-windows
+          path: tauri-app2/src-tauri/target/release/bundle/
+
+  build-tauri-app3:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install dependencies
+        working-directory: tauri-app3
+        run: npm install
+
+      - name: Build Tauri
+        working-directory: tauri-app3
+        run: npm run tauri build
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: tauri-app3-windows
+          path: tauri-app3/src-tauri/target/release/bundle/
