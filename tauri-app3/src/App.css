@@ -1,0 +1,398 @@
+@font-face {
+  font-family: "Nasalization";
+  src: url("/Nasalization/nasalization-rg.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #121212;
+  --sidebar-bg: #020c11;
+  --surface: #081118;
+  --surface-border: #222d34;
+  --cyan: #00e2a4;
+  --cyan-btn: #039c73;
+  --text: #ffffff;
+  --text-muted: #b8c4ca;
+  --text-dim: #6b7a82;
+  --radius-panel: 26px;
+  --radius-card: 16px;
+  --radius-btn: 999px;
+  --sidebar-width: 420px;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  min-height: 100vh;
+}
+
+body {
+  font-family: "Nasalization", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+.app {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  justify-content: stretch;
+  align-items: stretch;
+  padding: 40px 56px;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.app-layout {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-start;
+  gap: 72px;
+  width: 100%;
+  flex: 1;
+}
+
+/* Comet background */
+
+.page-effects {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.comets-layer {
+  position: absolute;
+  inset: 0;
+}
+
+.comet {
+  position: absolute;
+  width: var(--line-length, 70px);
+  height: 1px;
+  border-radius: 999px;
+  background: linear-gradient(to left,
+      rgba(255, 255, 255, 0.5) 0%,
+      rgba(255, 255, 255, 0.12) 55%,
+      rgba(255, 255, 255, 0) 100%);
+  transform-origin: 100% 50%;
+  opacity: 0;
+  animation: comet-fall linear infinite;
+}
+
+@keyframes comet-fall {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) rotate(125deg);
+  }
+
+  10% {
+    opacity: 0.5;
+  }
+
+  90% {
+    opacity: 0.5;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(-420px, 420px, 0) rotate(125deg);
+  }
+}
+
+/* Intel sidebar */
+
+.intel-sidebar {
+  flex-shrink: 0;
+  width: var(--sidebar-width);
+  background: #0F0D11;
+  border: 1px solid #1D1B1F;
+  border-radius: var(--radius-panel);
+  padding: 36px 28px;
+  height: max-content;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.intel-sidebar-eyebrow {
+  display: block;
+  font-size: 14px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #8F8F8F;
+  margin-bottom: 8px;
+}
+
+.intel-sidebar-title {
+  font-size: 28px;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  color: var(--text);
+  line-height: 1.15;
+}
+
+.intel-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.intel-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: none;
+  padding: 16px 14px;
+  background: #110f15;
+  border: 1px solid #161418;
+  border-radius: 20px;
+}
+
+.intel-card-date {
+  width: 100%;
+  font-size: 14px;
+  color: #808080;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.intel-card-main {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.intel-card-thumb {
+  flex-shrink: 0;
+  width: 64px;
+  height: 60px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.intel-card-thumb img {
+  width: 64px;
+  height: 60px;
+  object-fit: cover;
+}
+
+.intel-card-title {
+  flex: 1;
+  min-width: 0;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.25;
+  text-wrap: balance;
+  color: var(--text);
+  letter-spacing: 0.02em;
+  text-align: left;
+}
+
+.intel-card-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  width: 100%;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #83d3d9;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.intel-card-link-text {
+  line-height: 1.2;
+  text-align: center;
+}
+
+.intel-card-link-arrow {
+  font-size: 16px;
+  line-height: 1;
+  text-align: center;
+}
+
+.intel-card-link:hover {
+  opacity: 0.8;
+}
+
+/* Access console */
+
+.access-console {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 0;
+}
+
+.access-console-eyebrow {
+  display: block;
+  font-size: 15px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #83D3D9;
+  margin-bottom: 18px;
+}
+
+.access-console-title {
+  font-size: clamp(36px, 4.2vw, 52px);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: 0.02em;
+  color: var(--text);
+  margin-bottom: 26px;
+}
+
+.access-console-description {
+  font-size: 16px;
+  line-height: 1.7;
+  color: white;
+  letter-spacing: 0.04em;
+  margin-bottom: 36px;
+  max-width: 780px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+  margin-top: 32px;
+  max-width: 780px;
+}
+
+.stat-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 22px 24px;
+  background: #0E0D11;
+  border: 1px solid #212021;
+  border-radius: var(--radius-card);
+  min-height: 108px;
+}
+
+.stat-box-label {
+  font-size: 17px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: white;
+}
+
+.stat-box-value {
+  font-size: 24px;
+  letter-spacing: 0.04em;
+  color: var(--text);
+}
+
+.get-access-btn {
+  width: 100%;
+  max-width: 780px;
+  padding: 20px 52px;
+  border: 1px solid #194C50;
+  border-radius: 17px;
+  background: #0C1D1F;
+  color: #7DE2F0;
+  font-family: inherit;
+  font-size: 16px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s, opacity 0.2s;
+}
+
+.get-access-btn:hover:not(:disabled) {
+  background: #17393d;
+}
+
+.get-access-btn:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+/* Responsive */
+
+@media (max-width: 1100px) {
+  .app-layout {
+    gap: 40px;
+  }
+
+  .intel-sidebar {
+    width: 320px;
+  }
+}
+
+@media (max-width: 960px) {
+  .app {
+    padding: 20px 16px;
+    align-items: flex-start;
+  }
+
+  .app-layout {
+    flex-direction: column;
+    gap: 24px;
+    max-width: 520px;
+  }
+
+  .intel-sidebar {
+    width: 100%;
+    padding: 28px 20px;
+  }
+
+  .access-console {
+    padding: 8px 0 16px;
+    max-width: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .app {
+    padding: 16px 12px;
+  }
+
+  .intel-sidebar {
+    padding: 24px 16px;
+    border-radius: 18px;
+  }
+
+  .access-console-title {
+    font-size: 26px;
+  }
+
+  .access-console-description {
+    font-size: 13px;
+    margin-bottom: 24px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+    margin-bottom: 24px;
+  }
+
+  .stat-box-value {
+    font-size: 18px;
+  }
+}
