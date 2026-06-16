@@ -1,0 +1,39 @@
+{
+  "name": "vantoro",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "tauri": "tauri",
+    "tauri:dev": "tauri dev",
+    "tauri:build": "tauri build",
+    "tauri:build:mac": "tauri build --target universal-apple-darwin",
+    "tauri:build:mac:arm": "tauri build --target aarch64-apple-darwin",
+    "tauri:build:mac:intel": "tauri build --target x86_64-apple-darwin",
+    "tauri:build:mac:dmg": "tauri build --target universal-apple-darwin --bundles dmg",
+    "tauri:build:linux": "node scripts/ensure-platform.js linux && tauri build --target x86_64-unknown-linux-gnu",
+    "tauri:build:linux:appimage": "node scripts/ensure-platform.js linux && tauri build --target x86_64-unknown-linux-gnu --bundles appimage",
+    "tauri:build:linux:deb": "node scripts/ensure-platform.js linux && tauri build --target x86_64-unknown-linux-gnu --bundles deb",
+    "tauri:build:windows": "node scripts/ensure-platform.js win32 && tauri build --target x86_64-pc-windows-msvc",
+    "tauri:build:windows:msi": "node scripts/ensure-platform.js win32 && tauri build --target x86_64-pc-windows-msvc --bundles msi",
+    "tauri:build:windows:exe": "node scripts/ensure-platform.js win32 && tauri build --target x86_64-pc-windows-msvc --bundles nsis",
+    "tauri:build:all": "node scripts/ensure-platform.js darwin && npm run tauri:build:mac"
+  },
+  "dependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "@tauri-apps/api": "^2",
+    "@tauri-apps/plugin-opener": "^2"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "@vitejs/plugin-react": "^4.6.0",
+    "typescript": "~5.8.3",
+    "vite": "^7.0.4",
+    "@tauri-apps/cli": "^2"
+  }
+}

@@ -1,0 +1,408 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #050a0e;
+  --card-bg: #020c11;
+  --cyan: #2ee4c5;
+  --cyan-mid: #1db896;
+  --cyan-dark: #158f75;
+  --text: #ffffff;
+  --text-muted: #6b7a82;
+  --text-dim: #4a5c63;
+  --input-bg: #081118;
+  --input-border: #222d34;
+  --input-border-focus: #1f5a52;
+  --radius-card: 23px;
+  --radius-input: 10px;
+  --radius-btn: 12px;
+}
+
+html,
+body,
+#root {
+  min-height: 100vh;
+}
+
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 72px;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.page::before {
+  content: "";
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 50%;
+  height: 50%;
+  background: radial-gradient(
+    ellipse 80% 60% at 20% 100%,
+    rgba(29, 184, 150, 0.08) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.page::after {
+  content: "";
+  position: fixed;
+  top: 50%;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  transform: translateY(-50%);
+  background: radial-gradient(
+    ellipse 120% 95% at 0% 50%,
+    #020f15 0%,
+    rgba(2, 15, 21, 0.55) 45%,
+    transparent 85%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Background chart graphic */
+
+.chart-graphic {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 55%;
+  max-height: 283px;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.85;
+  overflow: visible;
+}
+
+.chart-graphic-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 283px;
+  object-fit: contain;
+  object-position: left bottom;
+}
+
+/* Layout */
+
+.layout {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 64px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.branding {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+}
+
+.branding-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.branding-icon-wrap {
+  margin-bottom: 16px;
+}
+
+.branding-logo {
+  display: block;
+  width: auto;
+  max-width: 380px;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 12px rgba(46, 228, 197, 0.35));
+}
+
+.branding-name {
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: 0.38em;
+  color: var(--text);
+  margin-bottom: 20px;
+  margin-left: 0.38em;
+}
+
+.branding-tagline {
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+.branding-subtagline {
+  font-size: 17px;
+  line-height: 1.5;
+  color: #04906D;
+}
+
+
+.registration-card {
+  width: 50%;
+  flex-shrink: 0;
+  background: var(--card-bg);
+  border: 1px solid rgba(46, 228, 197, 0.06);
+  border-radius: var(--radius-card);
+  padding: 58px;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.3),
+    0 16px 48px rgba(0, 0, 0, 0.5);
+}
+
+.registration-title {
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 32px;
+}
+
+/* Form */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field-label {
+  font-size: 13px;
+  color: #949798;
+}
+
+.field-label-optional {
+  color: #565E65;
+}
+
+.field-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: var(--radius-input);
+  padding: 0 14px;
+  height: 48px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.field-input-wrap:focus-within {
+  border-color: var(--input-border-focus);
+  box-shadow: 0 0 0 1px rgba(46, 228, 197, 0.12);
+}
+
+.field-icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.field-icon-img {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  display: block;
+  opacity: 0.85;
+  filter: brightness(0) saturate(100%) invert(72%) sepia(28%) saturate(600%) hue-rotate(118deg) brightness(95%) contrast(92%);
+}
+
+.field-input-wrap input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-size: 14px;
+  font-family: inherit;
+  min-width: 0;
+}
+
+.field-input-wrap input::placeholder {
+  color: var(--text-dim);
+}
+
+.field-toggle {
+  background: none;
+  border: none;
+  color: #00e2a4;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  flex-shrink: 0;
+  opacity: 1;
+}
+
+.field-toggle:hover {
+  opacity: 1;
+}
+
+.submit-btn {
+  margin-top: 8px;
+  height: 52px;
+  border: none;
+  border-radius: var(--radius-btn);
+  background: linear-gradient(180deg, #22c9a5 0%, #1a9e82 55%, #158f75 100%);
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  box-shadow: 0 4px 24px rgba(29, 184, 150, 0.3);
+  transition: filter 0.2s, transform 0.15s, box-shadow 0.2s;
+}
+
+.submit-btn:hover {
+  filter: brightness(1.06);
+  box-shadow: 0 4px 28px rgba(29, 184, 150, 0.35);
+}
+
+.submit-btn:active {
+  transform: scale(0.99);
+}
+
+.submit-btn:disabled {
+  cursor: wait;
+  opacity: 0.75;
+  filter: none;
+}
+
+.sign-in {
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.sign-in a {
+  color: #039c73;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.sign-in a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive */
+
+@media (max-width: 1100px) {
+  .layout {
+    gap: 48px;
+  }
+
+  .registration-card {
+    padding: 48px;
+  }
+}
+
+@media (max-width: 960px) {
+  .page {
+    padding: 32px 24px;
+    align-items: flex-start;
+  }
+
+  .layout {
+    flex-direction: column;
+    gap: 40px;
+    max-width: 520px;
+  }
+
+  .branding {
+    padding: 16px 0 0;
+  }
+
+  .registration-card {
+    width: 100%;
+    padding: 48px;
+  }
+
+  .chart-graphic {
+    width: 100%;
+    max-height: 283px;
+    opacity: 0.5;
+  }
+
+  .chart-graphic-img {
+    width: 100%;
+    max-height: 283px;
+  }
+
+  .registration-title {
+    font-size: 28px;
+    margin-bottom: 24px;
+  }
+}
+
+@media (max-width: 640px) {
+  .page {
+    padding: 28px 20px;
+  }
+
+  .registration-card {
+    padding: 40px 32px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page {
+    padding: 24px 16px;
+  }
+
+  .layout {
+    gap: 32px;
+    max-width: 100%;
+  }
+
+  .registration-card {
+    padding: 32px 24px;
+  }
+
+  .registration-title {
+    font-size: 26px;
+    margin-bottom: 20px;
+  }
+
+  .branding-name {
+    font-size: 22px;
+    letter-spacing: 0.3em;
+  }
+}

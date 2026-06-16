@@ -1,0 +1,4 @@
+[[permission]]
+identifier = "allow-install-build-file"
+description = "Allows downloading and installing the configured file."
+commands.allow = ["install_build_file"]
