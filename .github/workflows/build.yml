@@ -1,13 +1,30 @@
-
-name: Build Windows
+name: Build macOS and Windows
 
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 
 jobs:
-  build-tauri-app2:
-    runs-on: windows-latest
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        app: [tauri-app2, tauri-app3]
+        platform: [macos-latest, windows-latest]
+        include:
+          - platform: macos-latest
+            os_name: macos
+            args: --target universal-apple-darwin
+            rust_targets: aarch64-apple-darwin,x86_64-apple-darwin
+          - platform: windows-latest
+            os_name: windows
+            args: --target x86_64-pc-windows-msvc
+            rust_targets: x86_64-pc-windows-msvc
+
+    runs-on: ${{ matrix.platform }}
+    name: ${{ matrix.app }} / ${{ matrix.os_name }}
+
     steps:
       - uses: actions/checkout@v4
 
@@ -18,44 +35,25 @@ jobs:
 
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.rust_targets }}
+
+      - name: Rust cache
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: ${{ matrix.app }}/src-tauri
 
       - name: Install dependencies
-        working-directory: tauri-app2
+        working-directory: ${{ matrix.app }}
         run: npm install
 
       - name: Build Tauri
-        working-directory: tauri-app2
-        run: npm run tauri build
+        working-directory: ${{ matrix.app }}
+        run: npm run tauri build -- ${{ matrix.args }}
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: tauri-app2-windows
-          path: tauri-app2/src-tauri/target/release/bundle/
-
-  build-tauri-app3:
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Install Rust
-        uses: dtolnay/rust-toolchain@stable
-
-      - name: Install dependencies
-        working-directory: tauri-app3
-        run: npm install
-
-      - name: Build Tauri
-        working-directory: tauri-app3
-        run: npm run tauri build
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: tauri-app3-windows
-          path: tauri-app3/src-tauri/target/release/bundle/
+          name: ${{ matrix.app }}-${{ matrix.os_name }}
+          path: ${{ matrix.app }}/src-tauri/target/*/release/bundle/
+          if-no-files-found: error
